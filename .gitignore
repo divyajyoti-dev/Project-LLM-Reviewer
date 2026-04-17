@@ -1,0 +1,17 @@
+# Environment — never commit secrets
+.env
+
+# Data directories — user-local, not versioned
+papers/
+reviews/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+dist/
+*.egg-info/
+
+# OS
+.DS_Store
