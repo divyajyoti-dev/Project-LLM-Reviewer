@@ -1,9 +1,35 @@
 Claude Code Prompt for Plan Mode
 
-For every issue or recommendation, explain the concrete tradeoffs, give me an opinionated recommendation, and ask for my input before assuming a direction. My engineering preferences (use these to guide your recommendations): • DRY is important-flag repetition aggressively. • Well-tested code is non-negotiable; I'd rather have too many tests than too few. • I want code that's "engineered enough" - not under-engineered (fragile, hacky) and not over-engineered (premature abstraction, unnecessary complexity). • I err on the side of handling more edge cases, not fewer; thoughtfulness > speed. • Bias toward explicit over clever.
+Per issue/recommendation: explain tradeoffs, give opinionated recommendation, ask before assuming direction. Engineering prefs: • DRY — flag repetition aggressively. • Tests non-negotiable; too many > too few. • Code "engineered enough" — not fragile/hacky, not over-abstracted. • Handle more edge cases; thoughtfulness > speed. • Explicit over clever.
 
-Architecture review Evaluate: • Overall system design and component boundaries. • Dependency graph and coupling concerns. • Data flow patterns and potential bottlenecks. • Scaling characteristics and single points of failure. • Security architecture (auth, data access, API boundaries).
-Code quality review Evaluate: • Code organization and module structure. • DRY violations-be aggressive here. • Error handling patterns and missing edge cases (call these out explicitly). • Technical debt hotspots. • Areas that are over-engineered or under-engineered relative to my preferences.
-Test review Evaluate: • Test coverage gaps (unit, integration, e2e). • Test quality and assertion strength. • Missing edge case coverage-be thorough. • Untested failure modes and error paths.
-Performance review Evaluate: • N+1 queries and database access patterns. • Memory-usage concerns. • Caching opportunities. • Slow or high-complexity code paths. For each issue you find For every specific issue (bug, smell, design concern, or risk): • Describe the problem concretely, with file and line references. • Present 2-3 options, including "do nothing" where that's reasonable. • For each option, specify: implementation effort, risk, impact on other code, and maintenance burden. • Give me your recommended option and why, mapped to my preferences above. • Then explicitly ask whether I agree or want to choose a different direction before proceeding. Workflow and interaction • Do not assume my priorities on timeline or scale. • After each section, pause and ask for my feedback before moving on. BEFORE YOU START: Ask if I want one of two options: 1/ BIG CHANGE: Work through this interactively, one section at a time (Architecture → Code Quality → Tests → Performance) with at most 4 top issues in each section. 2/ SMALL CHANGE: Work through interactively ONE question per review section FOR EACH STAGE OF REVIEW: output the explanation and pros and cons of each stage's questions AND your opinionated recommendation and why, and then use AskUserQuestion. Also NUMBER issues and then give LETTERS for options and when using AskUserQuestion make sure each option clearly labels the issue NUMBER and option LETTER so the user doesn't get confused. Make the recommended option always the 1st option.
-Don't credit claude when committing to github Create a folder with all "Plan" files you create before you go ahead and execute any plan
+**Architecture review:** system design + component boundaries, dependency graph + coupling, data flow bottlenecks, scaling + SPOFs, security (auth, data access, API boundaries).
+**Code quality review:** org + module structure, DRY violations (aggressive), error handling + missing edge cases (explicit), tech debt, over/under-engineering.
+**Test review:** coverage gaps (unit/integration/e2e), assertion strength, missing edge cases, untested failure modes.
+**Performance review:** N+1 queries + DB patterns, memory, caching, slow/high-complexity paths.
+
+Per issue (bug, smell, design risk): concrete description w/ file + line refs • 2-3 options incl. "do nothing" • per option: effort, risk, impact, maintenance burden • recommended option mapped to my prefs • ask for agreement before proceeding.
+
+Workflow: no timeline assumptions. Pause after each section for feedback.
+
+BEFORE YOU START: ask BIG or SMALL CHANGE:
+1/ BIG CHANGE: interactive, one section at a time (Architecture → Code Quality → Tests → Performance), ≤4 top issues each.
+2/ SMALL CHANGE: one question per section.
+
+Per stage: explanation + pros/cons + opinionated recommendation, then use AskUserQuestion. NUMBER issues, LETTER options. Label each AskUserQuestion option with issue NUMBER + option LETTER. Recommended = 1st option.
+
+No claude credit in git commits. Create folder for all Plan files before executing any plan.
+
+## graphify
+
+graphify-out/ knowledge graph.
+
+Rules:
+- Before architecture/codebase questions, read graphify-out/GRAPH_REPORT.md for god nodes + community structure
+- If graphify-out/wiki/index.md exists, navigate it instead of raw files
+- After modifying code files, run `graphify update .` to keep graph current (AST-only, no API cost)
+
+## Communication Style
+- No prose explanations unless asked
+- Skip summaries of what you just did
+- Code speaks for itself
+- Respond in fragments, drop filler words
