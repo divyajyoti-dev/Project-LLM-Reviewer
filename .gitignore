@@ -5,6 +5,10 @@
 papers/
 reviews/
 
+# Large dataset + outputs — not versioned
+gen_review.db
+comparison_output.xlsx
+
 # Python
 __pycache__/
 *.pyc
