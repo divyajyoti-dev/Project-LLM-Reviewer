@@ -16,6 +16,7 @@ class Config:
     max_workers: int
     papers_dir: Path
     reviews_dir: Path
+    gen_review_db: Path
 
 
 def load_config() -> Config:
@@ -28,4 +29,5 @@ def load_config() -> Config:
         max_workers=int(os.environ.get("MAX_WORKERS", "4")),
         papers_dir=Path(os.environ.get("PAPERS_DIR", "papers")),
         reviews_dir=Path(os.environ.get("REVIEWS_DIR", "reviews")),
+        gen_review_db=Path(os.environ.get("GEN_REVIEW_DB", "gen_review.db")),
     )

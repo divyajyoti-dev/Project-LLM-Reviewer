@@ -10,6 +10,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$CLAUDE_TOOL_INPUT\" | grep -q 'compare_reviews' && cd /Users/divyajyoti/dev/Project-LLM-Reviewer && uv run python scripts/verify_comparisons.py 2>&1 || true"
+          }
+        ]
+      }
     ]
   }
 }
